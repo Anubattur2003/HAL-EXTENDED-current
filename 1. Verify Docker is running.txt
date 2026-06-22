@@ -1,0 +1,71 @@
+1. Verify Docker is running
+docker version
+
+
+2. Load Docker images from .tar files
+docker load -i hal-backend.tar
+docker load -i hal-frontend.tar
+docker load -i mysql-8.tar
+
+
+3 docker images
+You should see:
+
+hal-backend
+
+hal-frontend
+
+MySQL
+
+
+ Start containers (MOST IMPORTANT STEP)
+
+docker compose up -d
+
+
+Step 3️⃣: Check containers are running
+docker ps
+
+Step 4️⃣: Check backend API (this confirms backend is OK)
+
+Open browser:
+
+http://localhost:8001
+
+Step  import DB
+
+
+
+Get-Content clauses_dump.sql | docker exec -i hal-db mysql -u root -proot clauses
+
+Then verify again:
+
+SELECT COUNT(*) FROM mapped_selected_clauses;
+
+
+Step : Check database tables (IMPORTANT)
+
+Run:
+
+docker exec -it hal-db mysql -u root -proot
+
+Inside MySQL:
+
+USE clauses;
+SHOW TABLES;
+
+Expected:
+
+mandatory_clauses
+mapped_selected_clauses
+users
+
+
+
+
+Step 8️⃣: Refresh frontend
+
+Reload:
+
+http://localhost:8080
+
